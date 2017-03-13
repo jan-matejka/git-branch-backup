@@ -16,4 +16,4 @@ install:
 .PHONY: check
 check:
 
-	PATH="$(shell pwd)/bin:${PATH}" cram cram
+	PATH="$(PWD)/bin:$(PATH)" cram cram
