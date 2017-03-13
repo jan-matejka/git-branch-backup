@@ -19,6 +19,10 @@ When you are done, you can delete backups with::
 
   $ git branch -d master.backup{1..666}
 
+Alias for convenience::
+
+  $ echo -e "[alias]\n    bb = branch-backup" >> ~/.gitconfig
+
 Installation
 ############
 
