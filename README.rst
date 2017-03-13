@@ -29,3 +29,10 @@ Installation
 ::
 
   # make install
+
+Tests
+=====
+
+::
+
+  $ make check
