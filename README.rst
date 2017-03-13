@@ -24,7 +24,7 @@ Alias for convenience::
   $ echo -e "[alias]\n    bb = branch-backup" >> ~/.gitconfig
 
 Installation
-############
+============
 
 ::
 
