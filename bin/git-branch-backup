@@ -13,13 +13,13 @@ function highest_backup_id {
 
 function new_backup_id {
     local branch="${1}"
-    local highest=$(highest_backup_id "${branch}") || return 1
+    local highest=$(highest_backup_id "${branch}") || return
     echo $(( $highest + 1 ))
 }
 
 function main {
     local branch id
-    branch=$(git rev-parse --abbrev-ref HEAD) || return 1
+    branch=$(git rev-parse --abbrev-ref HEAD) || return
 
     if [[ "${branch}" == "HEAD" ]] ; then
         echo "There is no branch on HEAD" >&2
@@ -31,10 +31,10 @@ function main {
         return 1
     fi
 
-    id=$(new_backup_id "${branch}") || return 1
+    id=$(new_backup_id "${branch}") || return
 
     local backup="${branch}.backup${id}"
-    git branch "${backup}" || return 1
+    git branch "${backup}" || return
     echo "Created backup branch '${backup}'"
 }
 
