@@ -33,8 +33,9 @@ function main {
 
     id=$(new_backup_id "${branch}") || return 1
 
-    git checkout -b "${branch}.backup${id}" || return 1
-    git checkout "${branch}" || return 1
+    local backup="${branch}.backup${id}"
+    git branch "${backup}" || return 1
+    echo "Created backup branch '${backup}'"
 }
 
 main

@@ -18,30 +18,18 @@ setup::
 test backup::
 
   $ for i in {1..12} ; do git branch-backup; done
-  Switched to a new branch 'master.backup1'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup2'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup3'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup4'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup5'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup6'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup7'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup8'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup9'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup10'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup11'
-  Switched to branch 'master'
-  Switched to a new branch 'master.backup12'
-  Switched to branch 'master'
+  Created backup branch 'master.backup1'
+  Created backup branch 'master.backup2'
+  Created backup branch 'master.backup3'
+  Created backup branch 'master.backup4'
+  Created backup branch 'master.backup5'
+  Created backup branch 'master.backup6'
+  Created backup branch 'master.backup7'
+  Created backup branch 'master.backup8'
+  Created backup branch 'master.backup9'
+  Created backup branch 'master.backup10'
+  Created backup branch 'master.backup11'
+  Created backup branch 'master.backup12'
 
   $ git branch
   * master
@@ -60,13 +48,9 @@ test backup::
 
 test hole::
 
-  $ git checkout -b master.backup20
-  Switched to a new branch 'master.backup20'
-  $ git checkout master
-  Switched to branch 'master'
+  $ git branch master.backup20
   $ git branch-backup
-  Switched to a new branch 'master.backup21'
-  Switched to branch 'master'
+  Created backup branch 'master.backup21'
 
 test no branch on HEAD::
 
