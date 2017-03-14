@@ -6,12 +6,10 @@ Creates a local backup of your branch.
 Assuming you are standing on ``master``::
 
   $ git branch-backup
-  Switched to a new branch 'master.backup1'
-  Switched to branch 'master'
+  Created backup branch 'master.backup1'
 
   $ git branch-backup
-  Switched to a new branch 'master.backup2'
-  Switched to branch 'master'
+  Created backup branch 'master.backup2'
 
 et cetera.
 
