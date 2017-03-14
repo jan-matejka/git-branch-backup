@@ -21,6 +21,17 @@ Alias for convenience::
 
   $ echo -e "[alias]\n    bb = branch-backup" >> ~/.gitconfig
 
+Dependencies
+============
+
+* /bin/sh
+* coreutils
+* sed
+
+For tests:
+
+* https://pypi.python.org/pypi/cram
+
 Installation
 ============
 
