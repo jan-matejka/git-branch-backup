@@ -4,6 +4,8 @@ PREFIX ?= /usr/local
 LIBDIR ?= $(PREFIX)/lib
 BINDIR ?= $(PREFIX)/bin
 
+CRAMOPTS ?=
+
 build:
 
 	# NOOP
@@ -16,4 +18,4 @@ install:
 .PHONY: check
 check:
 
-	PATH="$(PWD)/bin:$(PATH)" cram cram
+	PATH="$(PWD)/bin:$(PATH)" cram $(CRAMOPTS) cram
