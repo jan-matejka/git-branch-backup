@@ -23,7 +23,7 @@ When you are done, you can delete backups with::
 
 Alias for convenience::
 
-  $ echo -e "[alias]\n    bb = branch-backup" >> ~/.gitconfig
+  $ git config --global alias.bb branch-backup
 
 Dependencies
 ============
