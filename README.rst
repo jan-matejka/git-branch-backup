@@ -28,7 +28,7 @@ Alias for convenience::
 Dependencies
 ============
 
-* /bin/sh
+* zsh
 * coreutils
 * sed
 

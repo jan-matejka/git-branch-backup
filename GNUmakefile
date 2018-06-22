@@ -4,7 +4,7 @@ PREFIX ?= /usr/local
 LIBDIR ?= $(PREFIX)/lib
 BINDIR ?= $(PREFIX)/bin
 
-CRAMOPTS ?=
+CRAMOPTS ?= --shell=zsh
 
 build:
 

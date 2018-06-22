@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /usr/bin/env zsh
 
 function highest_backup_id {
     local branch="${1}"
