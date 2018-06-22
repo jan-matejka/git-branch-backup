@@ -1,7 +1,7 @@
 setup::
 
   $ git init ./
-  Initialized empty Git repository in /tmp/cramtests-????????/test.t/.git/ (glob)
+  Initialized empty Git repository in /tmp/cramtests-*/test.t/.git/ (glob)
   $ touch a
   $ git add a
   $ git commit -m "add a" a
@@ -62,7 +62,7 @@ test no branch on HEAD::
 test already on backup branch::
 
   $ git checkout master.backup11
-  Previous HEAD position was ???????... add a (glob)
+  Previous HEAD position was ???????* add a (glob)
   Switched to branch 'master.backup11'
 
   $ git branch-backup
