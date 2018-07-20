@@ -68,3 +68,10 @@ test already on backup branch::
   $ git branch-backup
   HEAD is already a backup
   [1]
+
+slash in branch name
+
+  $ git checkout -b foo/bar
+  Switched to a new branch 'foo/bar'
+  $ git branch-backup
+  Created backup branch 'foo/bar.backup1'

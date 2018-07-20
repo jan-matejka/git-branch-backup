@@ -5,8 +5,11 @@ function highest_backup_id {
     [[ "${branch}" == "" ]] && return 1
 
     local prefix="${branch}.backup"
+    # Note: need to use sed delimiter that is illegal within branch name to prevent sed interpreting
+    # the character within branch name as the delimiter causing things like
+    # sed: -e expression #1, char 21: unknown option to `s'
     git branch --list --color=never "${prefix}*" \
-        | sed "s/^..${prefix}//" \
+        | sed "s:^..${prefix}::" \
         | sort -nr \
         | head -n1
 }
