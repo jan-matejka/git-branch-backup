@@ -15,6 +15,13 @@ install:
 
 	install -m755 bin/git-branch-backup $(DESTDIR)$(BINDIR)
 
+
+.PHONY: install-home
+install-home:
+
+	$(MAKE) install PREFIX=$(HOME)/.local
+
+
 .PHONY: check
 check:
 
