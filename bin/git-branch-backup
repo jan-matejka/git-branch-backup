@@ -6,7 +6,7 @@ function highest_backup_id {
 
     local prefix="${branch}.backup"
     git branch --list --color=never "${prefix}*" \
-        | sed "s/^..${prefix}//" \
+        | sed "s:^..${prefix}::" \
         | sort -nr \
         | head -n1
 }
