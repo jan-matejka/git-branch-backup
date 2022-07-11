@@ -25,12 +25,28 @@ Alias for convenience::
 
   $ git config --global alias.bb branch-backup
 
+Environment variables
+=====================
+
+BACKUP_BRANCH_FMT
+  Format string used to construct backup branch name via ``man 3 printf``.
+
+  1st argument is current branch name.
+
+  2nd argument is the new backup branch id.
+
+  Defaults to ``%1$s.backup%2$s`` constructing backups like ``master.backup2`` for ``master``
+  branch.
+
+  Example alternative: ``dev/%1$s/%2$s`` constructing backups like ``dev/master/2`` for ``master``.
+
 Dependencies
 ============
 
 * zsh
 * coreutils
 * sed
+* GNU grep
 
 For tests:
 
