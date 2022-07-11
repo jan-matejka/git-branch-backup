@@ -1,7 +1,7 @@
 git-branch-backup
 #################
 
-Creates a local backup of your branch. Usefull to do
+Creates a local backup of your branch. Useful to do
 `before git-rebase`_ in case it goes wrong so you do not have to go reflog
 diving.
 
