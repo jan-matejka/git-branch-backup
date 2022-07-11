@@ -83,3 +83,8 @@ BACKUP_BRANCH_FMT::
   Created backup branch 'dev/foo/bar/1'
   $ git branch-backup
   Created backup branch 'dev/foo/bar/2'
+
+  $ git checkout -q dev/foo/bar/2
+  $ git branch-backup
+  HEAD is already a backup
+  [1]

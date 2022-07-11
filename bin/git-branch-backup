@@ -33,6 +33,12 @@ function new_backup_id {
     echo $(( $highest + 1 ))
 }
 
+function branch_is_backup {
+  local match=$(backup_branch_name '.*' '[0-9]+')
+  match="^$match$"
+  printf "%s\n" "$branch" | grep -qsP "$match"
+}
+
 function main {
     local branch id
     branch=$(git rev-parse --abbrev-ref HEAD) || return
@@ -42,7 +48,7 @@ function main {
         return 1
     fi
 
-    if [[ ${branch} =~ ^.*\.backup[0-9]{1,}$ ]]; then
+    if branch_is_backup $branch; then
         echo "HEAD is already a backup" >&2
         return 1
     fi
