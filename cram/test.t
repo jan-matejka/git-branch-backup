@@ -18,39 +18,39 @@ setup::
 test backup::
 
   $ for i in {1..12} ; do git branch-backup; done
-  Created backup branch 'master.backup1'
-  Created backup branch 'master.backup2'
-  Created backup branch 'master.backup3'
-  Created backup branch 'master.backup4'
-  Created backup branch 'master.backup5'
-  Created backup branch 'master.backup6'
-  Created backup branch 'master.backup7'
-  Created backup branch 'master.backup8'
-  Created backup branch 'master.backup9'
-  Created backup branch 'master.backup10'
-  Created backup branch 'master.backup11'
-  Created backup branch 'master.backup12'
+  Created backup branch 'master.backup/1'
+  Created backup branch 'master.backup/2'
+  Created backup branch 'master.backup/3'
+  Created backup branch 'master.backup/4'
+  Created backup branch 'master.backup/5'
+  Created backup branch 'master.backup/6'
+  Created backup branch 'master.backup/7'
+  Created backup branch 'master.backup/8'
+  Created backup branch 'master.backup/9'
+  Created backup branch 'master.backup/10'
+  Created backup branch 'master.backup/11'
+  Created backup branch 'master.backup/12'
 
   $ git branch
   * master
-    master.backup1
-    master.backup10
-    master.backup11
-    master.backup12
-    master.backup2
-    master.backup3
-    master.backup4
-    master.backup5
-    master.backup6
-    master.backup7
-    master.backup8
-    master.backup9
+    master.backup/1
+    master.backup/10
+    master.backup/11
+    master.backup/12
+    master.backup/2
+    master.backup/3
+    master.backup/4
+    master.backup/5
+    master.backup/6
+    master.backup/7
+    master.backup/8
+    master.backup/9
 
 test hole::
 
-  $ git branch master.backup20
+  $ git branch master.backup/20
   $ git branch-backup
-  Created backup branch 'master.backup21'
+  Created backup branch 'master.backup/21'
 
 test no branch on HEAD::
 
@@ -61,9 +61,9 @@ test no branch on HEAD::
 
 test already on backup branch::
 
-  $ git checkout master.backup11
+  $ git checkout master.backup/11
   Previous HEAD position was ???????* add a (glob)
-  Switched to branch 'master.backup11'
+  Switched to branch 'master.backup/11'
 
   $ git branch-backup
   HEAD is already a backup
@@ -74,7 +74,7 @@ slash in branch name
   $ git checkout -b foo/bar
   Switched to a new branch 'foo/bar'
   $ git branch-backup
-  Created backup branch 'foo/bar.backup1'
+  Created backup branch 'foo/bar.backup/1'
 
 BACKUP_BRANCH_FMT::
 

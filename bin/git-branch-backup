@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 
-: ${BACKUP_BRANCH_FMT:='%1$s.backup%2$s'}
+: ${BACKUP_BRANCH_FMT:='%1$s.backup/%2$s'}
 
 function backup_branch_name {
   printf $BACKUP_BRANCH_FMT "$@"

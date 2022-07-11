@@ -10,16 +10,16 @@ diving.
 Assuming you are standing on ``master``::
 
   $ git branch-backup
-  Created backup branch 'master.backup1'
+  Created backup branch 'master.backup/1'
 
   $ git branch-backup
-  Created backup branch 'master.backup2'
+  Created backup branch 'master.backup/2'
 
 et cetera.
 
 When you are done, you can delete backups with::
 
-  $ git branch -d master.backup{1..666}
+  $ git branch -d master.backup/{1..666}
 
 Alias for convenience::
 
@@ -35,8 +35,9 @@ BACKUP_BRANCH_FMT
 
   2nd argument is the new backup branch id.
 
-  Defaults to ``%1$s.backup%2$s`` constructing backups like ``master.backup2`` for ``master``
-  branch.
+  Defaults to ``%1$s.backup/%2$s`` constructing backups like ``master.backup/2`` for ``master``
+  branch. Note including the ``/`` in the backup branch name is motivated by existence of IDEs and
+  other UIs that display branch names as collapsible tree.
 
   Example alternative: ``dev/%1$s/%2$s`` constructing backups like ``dev/master/2`` for ``master``.
 
