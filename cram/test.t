@@ -80,4 +80,6 @@ BACKUP_BRANCH_FMT::
 
   $ export BACKUP_BRANCH_FMT='dev/%1$s/%2$s'
   $ git branch-backup
+  Created backup branch 'dev/foo/bar/1'
+  $ git branch-backup
   Created backup branch 'dev/foo/bar/2'

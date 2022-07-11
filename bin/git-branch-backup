@@ -2,16 +2,27 @@
 
 : ${BACKUP_BRANCH_FMT:='%1$s.backup%2$s'}
 
+function backup_branch_name {
+  printf $BACKUP_BRANCH_FMT "$@"
+}
+
 function highest_backup_id {
     local branch="${1}"
     [[ "${branch}" == "" ]] && return 1
 
-    local prefix="${branch}.backup"
+    # lb_prefix: local branch prefix
+    local lb_prefix="refs/heads/"
+
+    local match="^${lb_prefix}$(backup_branch_name "${branch}" '[0-9]+')$"
+    local sed_match=$(backup_branch_name ${branch} '\([0-9]\+\)')
     # Note: need to use sed delimiter that is illegal within branch name to prevent sed interpreting
     # the character within branch name as the delimiter causing things like
     # sed: -e expression #1, char 21: unknown option to `s'
-    git branch --list --color=never "${prefix}*" \
-        | sed "s:^..${prefix}::" \
+    local sed_expr="s:^${lb_prefix}${sed_match}$:\1:"
+
+    git for-each-ref --format="%(refname)" "refs/heads" \
+        | grep -P "$match" \
+        | sed "${sed_expr}" \
         | sort -nr \
         | head -n1
 }
@@ -38,7 +49,7 @@ function main {
 
     id=$(new_backup_id "${branch}") || return
 
-    local backup=$(printf $BACKUP_BRANCH_FMT "${branch}" "${id}")
+    local backup=$(backup_branch_name "${branch}" "${id}")
     git branch "${backup}" || return
     echo "Created backup branch '${backup}'"
 }
