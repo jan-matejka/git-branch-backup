@@ -13,16 +13,15 @@ function highest_backup_id {
     # lb_prefix: local branch prefix
     local lb_prefix="refs/heads/"
 
-    local match="^${lb_prefix}$(backup_branch_name "${branch}" '[0-9]+')$"
-    local sed_match=$(backup_branch_name ${branch} '\([0-9]\+\)')
+    local match="^${lb_prefix}$(backup_branch_name "${branch}" '([0-9]+)')$"
     # Note: need to use sed delimiter that is illegal within branch name to prevent sed interpreting
     # the character within branch name as the delimiter causing things like
     # sed: -e expression #1, char 21: unknown option to `s'
-    local sed_expr="s:^${lb_prefix}${sed_match}$:\1:"
+    local sed_expr="s:${match}:\1:"
 
     git for-each-ref --format="%(refname)" "refs/heads" \
-        | grep -P "$match" \
-        | sed "${sed_expr}" \
+        | grep -E "$match" \
+        | sed -E "${sed_expr}" \
         | sort -nr \
         | head -n1
 }
@@ -36,7 +35,7 @@ function new_backup_id {
 function branch_is_backup {
   local match=$(backup_branch_name '.*' '[0-9]+')
   match="^$match$"
-  printf "%s\n" "$branch" | grep -qsP "$match"
+  printf "%s\n" "$branch" | grep -qsE "$match"
 }
 
 function main {

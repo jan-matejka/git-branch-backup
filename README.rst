@@ -47,7 +47,7 @@ Dependencies
 * zsh
 * coreutils
 * sed
-* GNU grep
+* grep
 
 For tests:
 
