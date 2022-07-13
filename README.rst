@@ -5,7 +5,7 @@ Create a local backup of your HEAD branch.
 
 Useful to do `before git-rebase`_ in case it goes wrong so you do not have to go reflog diving.
 
-.. _before git-rebase: http://www.headdesk.cz/computers/git/rebase.html
+.. _before git-rebase: https://www.matejka.ninja/computers/git/rebase.html
 
 Assuming you are standing on ``master``::
 
