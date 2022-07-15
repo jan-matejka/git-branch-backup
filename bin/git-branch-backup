@@ -28,7 +28,7 @@ function highest_backup_id {
 
 function new_backup_id {
     local branch="${1}"
-    local highest=$(highest_backup_id "${branch}") || return
+    local highest=$(highest_backup_id "${branch}") || 0
     echo $(( $highest + 1 ))
 }
 
