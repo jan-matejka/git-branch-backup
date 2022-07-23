@@ -1,17 +1,17 @@
 setup::
 
   $ git init ./
-  Initialized empty Git repository in /tmp/cramtests-*/test.t/.git/ (glob)
+  Initialized empty Git repository in /tmp/*/.git/ (glob)
   $ touch a
   $ git add a
   $ git commit -m "add a" a
-  [master (root-commit) ???????] add a (glob)
+  \[master \(root-commit\) [0-9a-f]{7}\] add a (re)
    1 file changed, 0 insertions(+), 0 deletions(-)
    create mode 100644 a
   $ touch b
   $ git add b
   $ git commit -m "add b" b
-  [master ???????] add b (glob)
+  \[master [0-9a-f]{7}\] add b (re)
    1 file changed, 0 insertions(+), 0 deletions(-)
    create mode 100644 b
 

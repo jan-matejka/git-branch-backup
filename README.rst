@@ -51,7 +51,7 @@ Dependencies
 
 For tests:
 
-* https://pypi.python.org/pypi/cram
+* https://git.sr.ht/~rne/dram/tree/master
 
 Installation
 ============
