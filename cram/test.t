@@ -1,4 +1,12 @@
-setup::
+isolate tests from user's and system's config files:
+  $ export GIT_CONFIG_NOSYSTEM=1
+  $ export HOME=$TMPDIR/home
+  $ mkdir $HOME
+  $ git config --global init.defaultBranch master
+  $ git config --global user.name foo
+  $ git config --global user.email foo@example.com
+
+test setup:
 
   $ git init ./
   Initialized empty Git repository in /tmp/*/.git/ (glob)
