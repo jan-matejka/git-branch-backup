@@ -1,7 +1,6 @@
 .DEFAULT_GOAL := build
 
 PREFIX ?= /usr/local
-LIBDIR ?= $(PREFIX)/lib
 BINDIR ?= $(PREFIX)/bin
 
 CRAMOPTS ?= --shell=zsh
