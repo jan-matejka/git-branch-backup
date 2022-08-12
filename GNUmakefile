@@ -3,8 +3,6 @@
 prefix ?= /usr/local
 bindir ?= $(prefix)/bin
 
-CRAMOPTS ?= --shell=zsh
-
 build:
 
 	# NOOP
