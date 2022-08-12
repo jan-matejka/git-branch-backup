@@ -3,6 +3,9 @@
 prefix ?= /usr/local
 bindir ?= $(prefix)/bin
 
+INSTALL = install
+INSTALL_PROGRAM = $(INSTALL)
+
 build:
 
 	# NOOP
@@ -10,7 +13,7 @@ build:
 .PHONY: install
 install:
 
-	install -m755 bin/git-branch-backup $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) bin/git-branch-backup $(DESTDIR)$(bindir)
 
 
 .PHONY: install-home
