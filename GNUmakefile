@@ -25,4 +25,4 @@ install-home:
 .PHONY: check
 check:
 
-	PATH="$$PWD/bin:$$PATH" dram -s zsh cram
+	PATH="$$PWD/bin:$$PATH" dram -s zsh tests
