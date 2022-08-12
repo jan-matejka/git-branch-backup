@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build
 
-PREFIX ?= /usr/local
-BINDIR ?= $(PREFIX)/bin
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
 
 CRAMOPTS ?= --shell=zsh
 
@@ -12,13 +12,13 @@ build:
 .PHONY: install
 install:
 
-	install -m755 bin/git-branch-backup $(DESTDIR)$(BINDIR)
+	install -m755 bin/git-branch-backup $(DESTDIR)$(bindir)
 
 
 .PHONY: install-home
 install-home:
 
-	$(MAKE) install PREFIX=$(HOME)/.local
+	$(MAKE) install prefix=$(HOME)/.local
 
 
 .PHONY: check
