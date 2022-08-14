@@ -8,8 +8,10 @@ isolate tests from user's and system's config files:
 
 test setup:
 
+.. Note linux uses /tmp/ for tempdir while macos uses /private/...
+
   $ git init ./
-  Initialized empty Git repository in /tmp/*/.git/ (glob)
+  Initialized empty Git repository in /*/.git/ (glob)
   $ touch a
   $ git add a
   $ git commit -m "add a" a
