@@ -6,29 +6,26 @@ bindir ?= $(prefix)/bin
 INSTALL = install
 INSTALL_PROGRAM = $(INSTALL)
 
+bdir = _build
+
 .PHONY: all
 all: build check
 
 .PHONY: build
-build:
-
-	# NOOP
+build: $(bdir)/git-branch-backup.1
 
 .PHONY: install
 install:
 
 	$(INSTALL_PROGRAM) bin/git-branch-backup $(DESTDIR)$(bindir)
 
-
 .PHONY: install-home
 install-home:
 
 	$(MAKE) install prefix=$(HOME)/.local
 
-
 .PHONY: test
 test: check
-
 
 .PHONY: check
 check:
@@ -38,4 +35,10 @@ check:
 .PHONY: clean
 clean:
 
-	# NOOP
+	$(RM) -r $(bdir)
+
+$(bdir):
+	mkdir -p $@
+
+$(bdir)/%.1: doc/%.1.rst | $(bdir)
+	rst2man $< $@
