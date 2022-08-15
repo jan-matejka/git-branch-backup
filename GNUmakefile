@@ -6,6 +6,7 @@ bindir ?= $(prefix)/bin
 INSTALL = install
 INSTALL_PROGRAM = $(INSTALL)
 
+.PHONY: build
 build:
 
 	# NOOP
