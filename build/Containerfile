@@ -1,0 +1,17 @@
+FROM ghcr.io/linuxcontainers/debian-slim:11
+
+ADD ./build/deps.sh /
+RUN sh /deps.sh os-setup update install-build install-sources install-runtime cleanup
+
+FROM ghcr.io/linuxcontainers/debian-slim:11
+
+ADD ./build/deps.sh /
+RUN sh /deps.sh os-setup update install-runtime cleanup
+COPY --from=0 \
+  /usr/local/bin/fake \
+  /usr/local/bin/dram \
+  /usr/local/bin/dram.bin \
+  /usr/local/bin/basexy \
+  /usr/local/bin
+
+COPY --from=0 /deps.sh /

@@ -3,11 +3,60 @@ name: Test
 on:
   push:
 
+env:
+  # Warning: "ghcr.io/jan-matejka/git-branch-backup/debian11" does not seem to be a valid registry
+  # path. The registry path should not contain more than 2 slashes. Refer to the Inputs section of
+  # the readme for naming image and registry.
+  IMAGE_NAME: git-branch-backup-debian11
+  REGISTRY: ghcr.io/${{ github.actor }}
+
 jobs:
+  build-debian-image:
+    # https://www.redhat.com/en/blog/build-ubi-containers-github-actions-buildah-and-podman
+    name: Build Debian Container Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Github Container registry
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine tags
+        id: determine-tags
+        run: |
+          echo "::set-output name=tags::$GITHUB_SHA $([[ $GITHUB_REF_NAME == 'master' ]] && echo latest || true)"
+
+      - name: Pull latest image
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest || true
+
+      - name: Buildah Action
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.determine-tags.outputs.tags }}
+          containerfiles: |
+            ./build/Containerfile
+
+      - name: Push to Github Container Repository
+        id: push-to-ghcr
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ${{ env.REGISTRY }}
+
   run-make-check:
+    needs: build-debian-image
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/yaccz/debian-11-sh-toolchain
+      # env context is undefined for the expression evaluation in here.
+      image: ghcr.io/${{ github.actor }}/git-branch-backup-debian11:${{ github.sha }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
