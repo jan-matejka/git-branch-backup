@@ -3,11 +3,99 @@ name: Test
 on:
   push:
 
+env:
+  # Warning: "ghcr.io/jan-matejka/git-branch-backup/debian11" does not seem to be a valid registry
+  # path. The registry path should not contain more than 2 slashes. Refer to the Inputs section of
+  # the readme for naming image and registry.
+  IMAGE_NAME: git-branch-backup-debian11
+  REGISTRY: ghcr.io/${{ github.actor }}
+
 jobs:
+  build-debian-image:
+    # https://www.redhat.com/en/blog/build-ubi-containers-github-actions-buildah-and-podman
+    name: Build Debian Container Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Github Container registry
+        uses: redhat-actions/podman-login@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine tags
+        id: determine-tags
+        run: |
+          echo "tags=$GITHUB_SHA $([[ $GITHUB_REF_NAME == 'master' ]] && echo latest || true)" >> $GITHUB_OUTPUT
+
+      - name: Pull latest image
+        # The pull logic in this step works but is completely useless because the buildah-bud step
+        # below is not using the cache anyway in the GitHub Actions environment for unknown reason 
+        # (even with the --layers=true specified, which works normally).
+        run: |
+          set -eux
+          url=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          pulled=false
+
+          [[ $GITHUB_REF_NAME = 'master' ]] && {
+            # We are at master branch.
+
+            # git-rev-parse HEAD^2 does not work in a shallow clone where the 2nd parent does not
+            # exist.
+            # Set the second_parent to the 2nd parent commit hash if it exists or empty string if it
+            # does not.
+            second_parent=$(
+              git cat-file -p HEAD |
+                awk '$1 == "parent" && end != 1 { print $2 }; /^$/ { end=1 };' |
+                awk 'NR == 2 { print }'
+            )
+
+            [[ -n "${second_parent}" ]] && {
+              # if HEAD has a 2nd parent, it is a merge commit and the second parent is the HEAD of merged branch.
+              merged=${second_parent}
+            } || {
+              # HEAD is not a merge commit, therefore master was fast-forwarded and the HEAD of
+              # merged branch is current HEAD.
+              merged=$(git rev-parse HEAD^{commit})
+            }
+
+            # Try to pull the HEAD of merged branch. Or fall back to latest.
+            docker pull ${url}:${merged} && pulled=true || true
+          }
+
+          # Fall back to attempt to pull latest build from master.
+          # Do not fail the build if we failed to pull a latest image as the image may not exist if
+          # this is first CI run or the image might have also been dropped by the registry if it
+          # has not been used for some time.
+          $pulled || docker pull ${url}:latest || true
+
+      - name: Buildah Action
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.determine-tags.outputs.tags }}
+          layers: true # enable layer caching to re-use the pulled image version
+          containerfiles: |
+            ./build/Containerfile
+
+      - name: Push to Github Container Repository
+        id: push-to-ghcr
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-image.outputs.image }}
+          tags: ${{ steps.build-image.outputs.tags }}
+          registry: ${{ env.REGISTRY }}
+
   run-make-check:
+    needs: build-debian-image
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/yaccz/debian-11-sh-toolchain
+      # env context is undefined for the expression evaluation in here.
+      image: ghcr.io/${{ github.actor }}/git-branch-backup-debian11:${{ github.sha }}
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
