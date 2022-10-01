@@ -90,12 +90,12 @@ BUILDING
 Build Dependencies
 ------------------
 
-- `GNU Make <https://www.gnu.org/software/make/>`_
+- `gnu make <https://www.gnu.org/software/make/>`_
 - `docutils <https://docutils.sourceforge.io/>`_
-- POSIX.1-2017 utilities
+- posix.1-2017 utilities
 
   - `mkdir <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/mkdir.html#tag_20_79>`_
-- `GNU coreutils <http://gnu.org/software/coreutils>`_
+- `gnu coreutils <http://gnu.org/software/coreutils>`_
 
   - install
 
