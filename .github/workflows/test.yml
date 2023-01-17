@@ -112,7 +112,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: setup
-        run: sh bin/setup-macos.sh
+        run: sh build/setup-macos.sh
       - name: make build
         run: make build
       - name: Run make check
