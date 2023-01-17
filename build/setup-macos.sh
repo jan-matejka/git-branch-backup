@@ -2,7 +2,7 @@
 
 set -eux
 
-brew install boost dub dmd make
+brew install boost dub dmd make docutils
 
 
 git clone https://github.com/roman-neuhauser/basex.git &&
